@@ -61,7 +61,6 @@ exports.loginUser = async (req, res, next) => {
                error : "Invalid email or password"
             });
         }
-
         sendToken(user, 200, res);
     } catch (error) {
         console.log(error);

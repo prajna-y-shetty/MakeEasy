@@ -2,6 +2,7 @@
 const {
   Model
 } = require('sequelize');
+const jwt = require("jsonwebtoken")
 module.exports = (sequelize, DataTypes) => {
   class Service_Provider extends Model {
     /**
@@ -25,5 +26,11 @@ module.exports = (sequelize, DataTypes) => {
     sequelize,
     modelName: 'Service_Provider',
   });
+
+  Service_Provider.prototype.getJWTToken = function () {
+    return jwt.sign({ id: this.id }, process.env.JWT_SECRET, {
+      expiresIn: process.env.JWT_EXPIRE,
+    });
+  }
   return Service_Provider;
 };

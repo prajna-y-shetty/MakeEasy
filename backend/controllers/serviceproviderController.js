@@ -55,6 +55,7 @@ exports.loginsp = async (req, res, next) => {
                 error: "Invalid email or password"
             });
         }
+        console.log({service_provider},"=========>");
         sendToken(service_provider, 200, res);
     } catch (error) {
         console.log(error);
