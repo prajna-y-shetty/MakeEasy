@@ -75,7 +75,7 @@ export const listservice = async () => {
 }
 
 export const editservice = async (service) => {
-    var axios = require('axios');
+    let axios = require('axios');
     var qs = require('qs');
     var data = qs.stringify({
         'servicename': service.servicename,
