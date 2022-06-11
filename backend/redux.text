@@ -1,0 +1,17 @@
+Action(event)
+store
+reducer(event handler)
+
+store = {
+    catergories: [],
+    products: [],
+    cart: [],
+    user: []
+}
+
+function reducer(store, action){
+    const updated = {...store};
+    updated.products = ???
+}
+
+
