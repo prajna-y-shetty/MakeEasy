@@ -3,7 +3,7 @@ const validator = require("validator");
 const jwt = require("jsonwebtoken");
 const crypto = require("crypto");
 const {
-  Model
+  Model, NUMBER
 } = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
@@ -20,7 +20,8 @@ module.exports = (sequelize, DataTypes) => {
   User.init({
     name: DataTypes.STRING,
     email: DataTypes.STRING,
-    password: DataTypes.STRING
+    password: DataTypes.STRING,
+    status:DataTypes.NUMBER
   }, {
     sequelize,
     modelName: 'User',
