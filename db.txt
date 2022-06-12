@@ -1,0 +1,42 @@
+CREATE TABLE `sequelizemeta` (
+ `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+ PRIMARY KEY (`name`),
+ UNIQUE KEY `name` (`name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci
+services	CREATE TABLE `services` (
+ `id` int(11) NOT NULL AUTO_INCREMENT,
+ `name` varchar(255) DEFAULT NULL,
+ `description` varchar(255) DEFAULT NULL,
+ `price` int(11) DEFAULT NULL,
+ `avatar` varchar(255) DEFAULT NULL,
+ `createdAt` datetime NOT NULL,
+ `updatedAt` datetime NOT NULL,
+ PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4
+service_providers	CREATE TABLE `service_providers` (
+ `id` int(11) NOT NULL AUTO_INCREMENT,
+ `name` varchar(255) DEFAULT NULL,
+ `address` varchar(255) DEFAULT NULL,
+ `email` varchar(255) DEFAULT NULL,
+ `password` varchar(255) DEFAULT NULL,
+ `phone` int(11) DEFAULT NULL,
+ `id_proof` varchar(255) DEFAULT NULL,
+ `roll` varchar(255) DEFAULT NULL,
+ `createdAt` datetime NOT NULL,
+ `updatedAt` datetime NOT NULL,
+ PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4
+users	CREATE TABLE `users` (
+ `id` int(11) NOT NULL AUTO_INCREMENT,
+ `name` varchar(255) NOT NULL,
+ `email` varchar(255) NOT NULL,
+ `password` varchar(255) NOT NULL,
+ `avatar` varchar(255) DEFAULT NULL,
+ `role` varchar(255) DEFAULT 'user',
+ `resetPasswordToken` varchar(255) DEFAULT NULL,
+ `resetPasswordExpire` datetime DEFAULT NULL,
+ `createdAt` datetime NOT NULL,
+ `updatedAt` datetime NOT NULL,
+ PRIMARY KEY (`id`),
+ UNIQUE KEY `email` (`email`)
+) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=utf8mb4
