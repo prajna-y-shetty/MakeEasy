@@ -43,18 +43,17 @@ exports.registerUser = async (req, res, next) => {
         status: 0, //Email not verified.
       });
     }
-
-    console.log({user},"=======>");
+    const userId = user.length ? user[0] : user.id;
     //Send verification email here
-    const emailOptions={
-        email,
-        subject:"please verify you account for make-easy",
-        message:`<h1>Hey folks,</h1>
+    const emailOptions = {
+      email,
+      subject: "please verify you account for make-easy",
+      message: `<h1>Hey folks,</h1>
             <p>please verify your link by clicking this below link</p>
-            <a href="http://localhost:5000/api/verifyEmail">CLICK HERE</a>
-        `
-    }
-    await sendEmail(emailOptions)
+            <a href="http://localhost:5000/api/verifyEmail/${userId}">CLICK HERE</a>
+        `,
+    };
+    await sendEmail(emailOptions);
 
     return res.json("Registration completed.");
   } catch (error) {
