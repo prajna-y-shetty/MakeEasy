@@ -255,7 +255,7 @@ exports.verifyEmail = async (req, res, next) => {
         },
       }
     );
-    return res.json(1);
+    return res.send("<h1>Hey your mail verified </h1>");
   } catch (error) {
     console.log(error);
     return res.json(0);
