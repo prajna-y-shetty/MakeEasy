@@ -50,7 +50,7 @@ exports.registerUser = async (req, res, next) => {
       subject: "please verify you account for make-easy",
       message: `<h1>Hey folks,</h1>
             <p>please verify your link by clicking this below link</p>
-            <a href="http://localhost:5000/api/verifyEmail/${userId}">CLICK HERE</a>
+            <a href="http://localhost:8000/api/verifyEmail/${userId}">CLICK HERE</a>
         `,
     };
     await sendEmail(emailOptions);
