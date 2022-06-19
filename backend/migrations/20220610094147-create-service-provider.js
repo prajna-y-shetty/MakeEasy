@@ -23,9 +23,6 @@ module.exports = {
       phone: {
         type: Sequelize.INTEGER
       },
-      id_proof: {
-        type: Sequelize.STRING
-      },
       roll: {
         type: Sequelize.STRING
       },
