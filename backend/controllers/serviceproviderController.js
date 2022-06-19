@@ -111,21 +111,18 @@ exports.loginsp = async (req, res, next) => {
 
 exports.profilesp = async (req, res, next) => {
     try {
-        console.log(req.params);
-        const { name, email, phone, address } = req.body;
-        if (!name || !email) {
-            return res.json("failed");
-        }
+        const { name, service_id, phone, address, user_id } = req.body;
         const service_provider = await Service_Provider.update({
-            phone: req.body.phone,
-            address: req.body.address,
+            phone,
+            address,
+            name,
+            service_id
         }, {
             where: {
-                name: name,
-                email: email
+                id:user_id
             }
         });
-        return res.json("success");
+        return res.json({status:"ok"});
     } catch (error) {
         console.log(error);
         return res.json({
@@ -156,3 +153,18 @@ exports.verifyEmail = async (req, res, next) => {
       return res.json(0);
     }
   };
+
+  exports.getUser = async (req, res, next) => {
+    try {
+      const { user_id } = req.body;
+      const user = await Service_Provider.findOne({
+        where: {
+          id: user_id,
+        },
+      });
+      return res.json(user);
+    } catch (error) {
+      console.log(error);
+      return res.json(0);
+    }
+  }
