@@ -4,5 +4,7 @@ const serviceproviderController = require('../controllers/serviceproviderControl
 
 router.post("/registersp",serviceproviderController.registersp);
 router.post("/loginsp",serviceproviderController.loginsp);
+router.post("/profilesp",serviceproviderController.profilesp);
+router.get('/verifyEmail/:user_id',serviceproviderController.verifyEmail)
 
 module.exports = router;

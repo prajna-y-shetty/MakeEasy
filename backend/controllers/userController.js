@@ -10,7 +10,7 @@ const { validationResult } = require("express-validator");
 exports.registerUser = async (req, res, next) => {
   try {
     const { name, email, password } = req.body;
-    let user;
+    let user,userId;
 
     //get user with email, if exist
     const existUser = await User.findOne({
@@ -34,6 +34,7 @@ exports.registerUser = async (req, res, next) => {
           },
         }
       );
+      userId=existUser.id;
     } else {
       //no user exist
       user = await User.create({
@@ -42,8 +43,8 @@ exports.registerUser = async (req, res, next) => {
         password: await bcrypt.hash(password, 10),
         status: 0, //Email not verified.
       });
+      userId = user.id
     }
-    const userId = user.length ? user[0] : user.id;
     //Send verification email here
     const emailOptions = {
       email,
@@ -55,7 +56,7 @@ exports.registerUser = async (req, res, next) => {
     };
     await sendEmail(emailOptions);
 
-    return res.json("Registration completed.");
+    return res.json({status: "ok"});
   } catch (error) {
     console.log(error);
     return res.json("Oops! Something went wrong!");

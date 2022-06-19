@@ -19,7 +19,6 @@ exports.addservice = async (req, res) => {
             price: req.body.price
         });
         return res.send("success");
-        ;
     } catch (error) {
         console.log("add service error", error);
         return res.send("failed")
