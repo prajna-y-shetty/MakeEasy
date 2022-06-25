@@ -21,7 +21,8 @@ module.exports = (sequelize, DataTypes) => {
     password: DataTypes.STRING,
     phone: DataTypes.INTEGER,
     roll: DataTypes.STRING,
-    status:DataTypes.INTEGER
+    status:DataTypes.INTEGER,
+    service_id:DataTypes.INTEGER,
   }, {
     sequelize,
     modelName: 'Service_Provider',
