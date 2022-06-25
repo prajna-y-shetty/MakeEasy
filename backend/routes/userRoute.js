@@ -6,7 +6,8 @@ const {
     forgotPassword,
     resetPassword,
     getUser,
-    verifyEmail
+    verifyEmail,
+    bookService
 } = require("../controllers/userController");
 //const { body, validationResult } = require('express-validator');
 
@@ -26,6 +27,8 @@ router.put("/password/reset/:token", resetPassword);
 router.get("/logout", logout);
 
 router.get("/verifyEmail/:user_id",verifyEmail)
+
+router.post("/booking", bookService);
 
 
 module.exports = router;

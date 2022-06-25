@@ -1,0 +1,1 @@
+create table transactions (id int auto_increment primary key,service_id int,price int,service_provider_id int,user_id int,status int default 0,date TIMESTAMP default CURRENT_TIMESTAMP,createdAt TIMESTAMP default CURRENT_TIMESTAMP,updatedAt TIMESTAMP default CURRENT_TIMESTAMP); 
