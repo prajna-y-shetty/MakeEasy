@@ -1,4 +1,4 @@
-const { Transaction } = require("../models");
+const { Transaction, sequelize } = require("../models");
 const express = require("express");
 const service = require("../models/service");
 const { validationResult } = require("express-validator");
@@ -45,5 +45,25 @@ exports.generateLink = async (data) => {
     return response;
   } catch (error) {
     return error.error.description;
+  }
+};
+
+exports.getTransaction = async ({ user_id }) => {
+  try {
+    const response = await sequelize.query(
+      `SELECT sp.name as service_provider_name,t.price,t.date,s.name as service_name FROM transactions as t
+      JOIN service_providers as sp
+      On sp.id=t.service_provider_id
+      JOIN services as s ON s.id=t.service_id
+      WHERE user_id = ${user_id}
+      `,
+      {
+        type: sequelize.QueryTypes.SELECT,
+      }
+    );
+    return response;
+  } catch (error) {
+    console.log(error);
+    return 0;
   }
 };

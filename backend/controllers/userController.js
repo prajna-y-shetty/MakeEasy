@@ -5,7 +5,11 @@ const crypto = require("crypto");
 const bcrypt = require("bcryptjs");
 const { Op } = require("sequelize");
 const { validationResult } = require("express-validator");
-const { createTransaction, generateLink } = require("./payment");
+const {
+  createTransaction,
+  generateLink,
+  getTransaction,
+} = require("./payment");
 
 // Register a User
 exports.registerUser = async (req, res, next) => {
@@ -265,24 +269,35 @@ exports.verifyEmail = async (req, res, next) => {
 };
 
 exports.bookService = async (req, res, next) => {
-  try{
-  let response = await createTransaction(req.body);
-  if (!response)
-    return res.json({ status: "error", message: "Something went wrong" });
+  try {
+    let response = await generateLink({
+      amount: Number(req.body.price) * 100,
+      reference_id:
+        "booking_" +
+        Number(req.body.price) +
+        Math.random().toString(36).substring(2, 15) +
+        Math.random().toString(36).substring(2, 15),
+      customer_name: req.body.name,
+      customer_email: req.body.email,
+      customer_contact: req.body.phone,
+    });
+    if (!response || !response.short_url)
+      return res.json({ status: "error", message: "Something went wrong" });
+    let db = await createTransaction(req.body);
+    if (db) res.json({ status: "ok", response });
+    else throw new Error("");
+  } catch (error) {
+    res.json({ status: "error", message: error.message });
+  }
+};
 
-  response = await generateLink({
-    amount: Number(req.body.price) * 100,
-    reference_id:
-      "booking_" +
-      Number(req.body.price) +
-      Math.random().toString(36).substring(2, 15) +
-      Math.random().toString(36).substring(2, 15),
-    customer_name: req.body.name,
-    customer_email: req.body.email,
-    customer_contact: req.body.phone,
-  });
-  res.json({ status: "ok", response });
-}catch(error){
-  res.json({ status: "error", message: error.message });
-}
+exports.bookingHistory = async (req, res, next) => {
+  try {
+    let response = await getTransaction(req.body);
+    if (!response)
+      return res.json({ status: "error", message: "Something went wrong" });
+    res.json({ status: "ok", response });
+  } catch (error) {
+    res.json({ status: "error", message: error.message });
+  }
 };
