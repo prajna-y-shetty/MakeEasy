@@ -1,10 +1,9 @@
-const { User } = require("../models");
+const { User, Service_Provider, Service } = require("../models");
 const sendToken = require("../utils/jwtToken");
 const sendEmail = require("../utils/sendEmail");
 const crypto = require("crypto");
 const bcrypt = require("bcryptjs");
 const { Op } = require("sequelize");
-const { validationResult } = require("express-validator");
 const {
   createTransaction,
   generateLink,
@@ -284,8 +283,38 @@ exports.bookService = async (req, res, next) => {
     if (!response || !response.short_url)
       return res.json({ status: "error", message: "Something went wrong" });
     let db = await createTransaction(req.body);
-    if (db) res.json({ status: "ok", response });
-    else throw new Error("");
+    if (!db) throw new Error("create transaction failed");
+    const req_user = await User.findOne({
+      where: {
+        id: req.body.user_id,
+      },
+    });
+    if (!req_user) throw new Error("user not found");
+    const req_service = await Service.findOne({
+      where: {
+        id: req.body.service_id,
+      },
+    });
+
+    const req_serviceProvider = await Service_Provider.findOne({
+      where: {
+        id: req.body.service_provider_id,
+      },
+    });
+
+    const emailOptions = {
+      email: req_serviceProvider.email,
+      subject: "You got service request from makeeasy client",
+      message: `<h1>Hey ${req_serviceProvider.name}</h1>
+            <p>You have an service request from client. ${req_user.name}</p>
+            <p>Service Name: ${req_service.name}</p>
+            <p>Service Price: ${req_service.price}</p>
+            <p>Service Description: ${req_service.description}</p>
+            <p>Contact Email: ${req_user.email}</p>
+        `,
+    };
+    await sendEmail(emailOptions);
+    res.json({ status: "ok", response });
   } catch (error) {
     res.json({ status: "error", message: error.message });
   }
