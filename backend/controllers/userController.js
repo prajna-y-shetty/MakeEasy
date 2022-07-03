@@ -306,11 +306,13 @@ exports.bookService = async (req, res, next) => {
       email: req_serviceProvider.email,
       subject: "You got service request from makeeasy client",
       message: `<h1>Hey ${req_serviceProvider.name}</h1>
-            <p>You have an service request from client. ${req_user.name}</p>
+            <p>You have an service request from Mr/Ms.${req_user.name}</p>
             <p>Service Name: ${req_service.name}</p>
             <p>Service Price: ${req_service.price}</p>
             <p>Service Description: ${req_service.description}</p>
             <p>Contact Email: ${req_user.email}</p>
+            <p>Contact Phone: ${req.body.client_phone}</p>
+            <p>Service address: ${req.body.client_address}</p>
         `,
     };
     await sendEmail(emailOptions);
